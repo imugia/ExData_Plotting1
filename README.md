@@ -94,21 +94,72 @@ The four plots that you will need to construct are shown below.
 
 ### Plot 1
 
+data<-read.table("household_power_consumption.txt",sep=";",header = TRUE,stringsAsFactors = FALSE)
+data<-subset(data,data[1]=="1/2/2007"|data[1]=="2/2/2007")
+data<-na.omit(data)
+library(datasets)
+hist(as.numeric(as.character(data$Global_active_power)),col="red",xlab="Global active power (kilowatts)",main="Global Active Power")
+dev.copy(png,file="plot1.png")
+dev.off()
 
 ![plot of chunk unnamed-chunk-2](figure/unnamed-chunk-2.png) 
 
 
 ### Plot 2
 
+data <- read.table(file="household_power_consumption.txt", header=TRUE, sep=";")
+data1 <- subset(data, (as.Date(data$Date,format='%d/%m/%Y') >= "2007-02-01") & (as.Date(data$Date,format='%d/%m/%Y') <= "2007-02-02"))
+plot(as.numeric(as.character(data1$Global_active_power)),type="l",ylab="Global_active_power(Kilomatts)", xaxt='n',xlab="")
+axis(1,c(0,length(data1$Global_active_power)/2,length(data1$Global_active_power)),c("Thu","Fri","Sat"))
+dev.copy(png,file="plot2.png")
+dev.off()
+
+
+
 ![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3.png) 
 
 
 ### Plot 3
 
+data <- read.table(file="household_power_consumption.txt", header=TRUE, sep=";")
+data1 <- subset(data, (as.Date(data$Date,format='%d/%m/%Y') >= "2007-02-01") & (as.Date(data$Date,format='%d/%m/%Y') <= "2007-02-02"))
+plot(as.numeric(as.character(handle$Sub_metering_1)),type="l",xaxt='n',yaxt='n',xlab="",ylab="Energy sub metering")
+lines(as.numeric(as.character(handle$Sub_metering_2)), type="l",col="red")
+lines(handle$Sub_metering_3, type="l",col="blue")
+axis(1,c(0,length(handle$Sub_metering_1)/2,length(handle$Sub_metering_1)),c("Thu","Fri","Sat"))
+axis(side=2,at=seq(0,30,by=10))
+legend("topright", legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"),lty=c(1,1,1))
+dev.copy(png,file="plot3.png")
+dev.off()
+
 ![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 
 ### Plot 4
+
+data <- read.table(file="household_power_consumption.txt", header=TRUE, sep=";")
+data1 <- subset(data, (as.Date(data$Date,format='%d/%m/%Y') >= "2007-02-01") & (as.Date(data$Date,format='%d/%m/%Y') <= "2007-02-02"))
+
+par(mfrow = c(2, 2))
+
+plot(as.numeric(as.character(data1$Global_active_power)),type="l",ylab="Global Active Power", xaxt='n',xlab="")
+axis(1,c(0,length(data1$Global_active_power)/2,length(data1$Global_active_power)),c("Thu","Fri","Sat"))
+
+plot(as.numeric(as.character(data1$Voltage)),type="l",ylab="Voltage", xaxt='n',xlab="datetime")
+axis(1,c(0,length(data1$Global_active_power)/2,length(data1$Global_active_power)),c("Thu","Fri","Sat"))
+
+plot(as.numeric(as.character(handle$Sub_metering_1)),type="l",xaxt='n',yaxt='n',xlab="",ylab="Energy sub metering")
+lines(as.numeric(as.character(handle$Sub_metering_2)), type="l",col="red")
+lines(handle$Sub_metering_3, type="l",col="blue")
+axis(1,c(0,length(handle$Sub_metering_1)/2,length(handle$Sub_metering_1)),c("Thu","Fri","Sat"))
+axis(side=2,at=seq(0,30,by=10))
+legend("topright", legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),col=c("black","red","blue"),lty=c(1,1,1))
+
+plot(as.numeric(as.character(data1$Global_reactive_power)),type="l",ylab="Global_reactive_power", xaxt='n',xlab="datetime")
+axis(1,c(0,length(data1$Global_active_power)/2,length(data1$Global_active_power)),c("Thu","Fri","Sat"))
+
+dev.copy(png,file="plot4.png")
+dev.off()
 
 ![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5.png) 
 

@@ -1,7 +1,0 @@
-data<-read.table("household_power_consumption.txt",sep=";",header = TRUE,stringsAsFactors = FALSE)
-data<-subset(data,data[1]=="1/2/2007"|data[1]=="2/2/2007")
-data<-na.omit(data)
-library(datasets)
-hist(as.numeric(as.character(data$Global_active_power)),col="red",xlab="Global active power (kilowatts)",main="Global Active Power")
-dev.copy(png,file="plot1.png")
-dev.off()
